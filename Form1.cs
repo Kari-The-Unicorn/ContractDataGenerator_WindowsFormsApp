@@ -1,0 +1,59 @@
+﻿using System;
+using System.Windows.Forms;
+using GemBox.Document;
+
+namespace ContractDataGenerator_WindowsFormsApp
+{
+    public partial class Form1 : Form
+    {
+        private string fileName;
+
+        private string safeFileName;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void bUploadFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Title = "Upload file";
+            openFile.Filter = "DOCX|*.docx";
+
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show("Kliknij OK żeby potwierdzić plik: " + openFile.SafeFileName + ".");
+                if (openFile.FileName != null)
+                {
+                    //lUploadFileInfo.Text = "Wybrany plik: " + openFile.SafeFileName;
+                    //fileName = openFile.FileName;
+                    //safeFileName = openFile.SafeFileName;
+                    safeFileName = "Hello World.docx";
+                }
+
+                ComponentInfo.SetLicense("FREE-LIMITED-KEY");
+                var document = DocumentModel.Load(safeFileName);
+                string text = document.Content.ToString();
+                var x = string.Empty;
+                //DocumentModel document = new DocumentModel();
+                //Section section = new Section(document);
+                //document.Sections.Add(section);
+                //Paragraph paragraph = new Paragraph(document);
+                //section.Blocks.Add(paragraph);
+                //Run run = new Run(document, "Hello World!");
+                //paragraph.Inlines.Add(run);
+                //document.Save("Hello World.docx");
+
+                //using (WordDocument document = new WordDocument(fileName))
+                //{
+                //    //Gets the Word document text
+                //    string text = document.GetText();
+                //    //Display Word document's text content.
+                //    Console.WriteLine(text);
+                //    Console.ReadLine();
+                //}
+            }
+        }
+    }
+}
