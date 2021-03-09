@@ -30,9 +30,9 @@ namespace ContractDataGenerator_WindowsFormsApp
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lUploadFileInfo = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.bUploadFile = new System.Windows.Forms.Button();
-            this.lUploadFileInfo = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,6 +45,17 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(776, 288);
             this.panel1.TabIndex = 0;
+            // 
+            // lUploadFileInfo
+            // 
+            this.lUploadFileInfo.AutoSize = true;
+            this.lUploadFileInfo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.lUploadFileInfo.Location = new System.Drawing.Point(28, 16);
+            this.lUploadFileInfo.Name = "lUploadFileInfo";
+            this.lUploadFileInfo.Size = new System.Drawing.Size(182, 25);
+            this.lUploadFileInfo.TabIndex = 2;
+            this.lUploadFileInfo.Text = "Wybierz plik .doc";
+            this.lUploadFileInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button2
             // 
@@ -64,20 +75,9 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bUploadFile.Name = "bUploadFile";
             this.bUploadFile.Size = new System.Drawing.Size(297, 38);
             this.bUploadFile.TabIndex = 0;
-            this.bUploadFile.Text = "Wgraj umowę (plik doc)";
+            this.bUploadFile.Text = "Wgraj plik (plik doc)";
             this.bUploadFile.UseVisualStyleBackColor = true;
             this.bUploadFile.Click += new System.EventHandler(this.bUploadFile_Click);
-            // 
-            // lUploadFileInfo
-            // 
-            this.lUploadFileInfo.AutoSize = true;
-            this.lUploadFileInfo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.lUploadFileInfo.Location = new System.Drawing.Point(28, 16);
-            this.lUploadFileInfo.Name = "lUploadFileInfo";
-            this.lUploadFileInfo.Size = new System.Drawing.Size(182, 25);
-            this.lUploadFileInfo.TabIndex = 2;
-            this.lUploadFileInfo.Text = "Wybierz plik .doc";
-            this.lUploadFileInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
             // 
