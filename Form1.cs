@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using GemBox.Document;
 
@@ -28,15 +29,40 @@ namespace ContractDataGenerator_WindowsFormsApp
                 if (openFile.FileName != null)
                 {
                     //lUploadFileInfo.Text = "Wybrany plik: " + openFile.SafeFileName;
-                    //fileName = openFile.FileName;
-                    //safeFileName = openFile.SafeFileName;
-                    safeFileName = "Hello World.docx";
+                    fileName = openFile.FileName;
+                    safeFileName = openFile.SafeFileName;
+                    //safeFileName = "Hello World.docx";
                 }
                 else
                 {
                     errorMessage = "Proszę załączyć plik w formacie .DOCX lub .DOC.";
                     MessageBox.Show(errorMessage);
                 }
+
+                //Copy file to destination
+                var destinationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory) + @"UserFiles\" + safeFileName;
+                if (File.Exists(destinationPath))
+                {
+                    string extens = string.Empty;
+                    if (destinationPath.Contains("docx"))
+                    {
+                        extens = ".docx";
+                    }
+                    else
+                    {
+                        extens = ".doc";
+                    }
+
+                    destinationPath = destinationPath
+                        .Replace(".docx", string.Empty)
+                        .Replace(".doc", string.Empty) + "_" + DateTime.Now.ToString()
+                        .Replace("/", string.Empty)
+                        .Replace(":", string.Empty)
+                        .Replace(" ", string.Empty)
+                        + extens;
+                }
+                // Save copy to destinationPath
+                File.Copy(fileName, destinationPath, false);
 
                 ComponentInfo.SetLicense("FREE-LIMITED-KEY");
                 var document = DocumentModel.Load(safeFileName);

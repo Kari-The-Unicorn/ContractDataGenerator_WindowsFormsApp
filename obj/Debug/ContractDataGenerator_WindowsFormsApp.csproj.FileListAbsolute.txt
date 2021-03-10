@@ -9,6 +9,4 @@ C:\Users\karol\source\repos\ContractDataGenerator_WindowsFormsApp\obj\Debug\Cont
 C:\Users\karol\source\repos\ContractDataGenerator_WindowsFormsApp\obj\Debug\ContractDataGenerator_WindowsFormsApp.exe
 C:\Users\karol\source\repos\ContractDataGenerator_WindowsFormsApp\obj\Debug\ContractDataGenerator_WindowsFormsApp.pdb
 C:\Users\karol\source\repos\ContractDataGenerator_WindowsFormsApp\obj\Debug\ContractDataGenerator_WindowsFormsApp.csproj.CopyComplete
-C:\Users\karol\source\repos\ContractDataGenerator_WindowsFormsApp\bin\Debug\BouncyCastle.Crypto.dll
-C:\Users\karol\source\repos\ContractDataGenerator_WindowsFormsApp\bin\Debug\GemBox.Document.dll
 C:\Users\karol\source\repos\ContractDataGenerator_WindowsFormsApp\bin\Debug\GemBox.Document.xml

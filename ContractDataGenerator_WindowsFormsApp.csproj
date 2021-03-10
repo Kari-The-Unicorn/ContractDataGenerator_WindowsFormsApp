@@ -78,6 +78,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="bin\Debug\ContractDataGenerator_WindowsFormsApp.exe.config" />
+    <None Include="bin\Debug\Hello World.docx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -91,6 +93,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\BouncyCastle.Crypto.dll" />
+    <Content Include="bin\Debug\ContractDataGenerator_WindowsFormsApp.exe" />
+    <Content Include="bin\Debug\ContractDataGenerator_WindowsFormsApp.pdb" />
+    <Content Include="bin\Debug\GemBox.Document.dll" />
+    <Content Include="bin\Debug\GemBox.Document.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\UserFiles\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
