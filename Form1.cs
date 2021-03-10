@@ -18,11 +18,12 @@ namespace ContractDataGenerator_WindowsFormsApp
         private void bUploadFile_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFile = new OpenFileDialog();
-            openFile.Title = "Upload file";
-            openFile.Filter = "DOCX|*.docx";
+            openFile.Title = "Wybierz plik";
+            openFile.Filter = "DOCX|*.docx|DOC|*.doc";
 
             if (openFile.ShowDialog() == DialogResult.OK)
             {
+                string errorMessage = string.Empty;
                 MessageBox.Show("Kliknij OK żeby potwierdzić plik: " + openFile.SafeFileName + ".");
                 if (openFile.FileName != null)
                 {
@@ -30,6 +31,11 @@ namespace ContractDataGenerator_WindowsFormsApp
                     //fileName = openFile.FileName;
                     //safeFileName = openFile.SafeFileName;
                     safeFileName = "Hello World.docx";
+                }
+                else
+                {
+                    errorMessage = "Proszę załączyć plik w formacie .DOCX lub .DOC.";
+                    MessageBox.Show(errorMessage);
                 }
 
                 ComponentInfo.SetLicense("FREE-LIMITED-KEY");

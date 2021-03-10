@@ -52,31 +52,33 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.lUploadFileInfo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.lUploadFileInfo.Location = new System.Drawing.Point(28, 16);
             this.lUploadFileInfo.Name = "lUploadFileInfo";
-            this.lUploadFileInfo.Size = new System.Drawing.Size(182, 25);
+            this.lUploadFileInfo.Size = new System.Drawing.Size(297, 25);
             this.lUploadFileInfo.TabIndex = 2;
-            this.lUploadFileInfo.Text = "Wybierz plik .doc";
+            this.lUploadFileInfo.Text = "Wybierz plik (.docx lub .doc)";
             this.lUploadFileInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button2
             // 
+            this.button2.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.button2.Enabled = false;
             this.button2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.button2.Location = new System.Drawing.Point(23, 189);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(297, 38);
+            this.button2.Size = new System.Drawing.Size(260, 38);
             this.button2.TabIndex = 1;
             this.button2.Text = "Pobierz plik z danymi";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // bUploadFile
             // 
+            this.bUploadFile.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.bUploadFile.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.bUploadFile.Location = new System.Drawing.Point(23, 60);
             this.bUploadFile.Name = "bUploadFile";
-            this.bUploadFile.Size = new System.Drawing.Size(297, 38);
+            this.bUploadFile.Size = new System.Drawing.Size(175, 38);
             this.bUploadFile.TabIndex = 0;
-            this.bUploadFile.Text = "Wgraj plik (plik doc)";
-            this.bUploadFile.UseVisualStyleBackColor = true;
+            this.bUploadFile.Text = "Wgraj plik";
+            this.bUploadFile.UseVisualStyleBackColor = false;
             this.bUploadFile.Click += new System.EventHandler(this.bUploadFile_Click);
             // 
             // Form1
