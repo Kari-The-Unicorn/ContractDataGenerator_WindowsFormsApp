@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using GemBox.Document;
+using GemBox.Pdf;
+using GemBox.Pdf.Content;
 
 namespace ContractDataGenerator_WindowsFormsApp
 {
@@ -20,7 +23,8 @@ namespace ContractDataGenerator_WindowsFormsApp
         {
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Title = "Wybierz plik";
-            openFile.Filter = "DOCX|*.docx|DOC|*.doc";
+            //openFile.Filter = "DOCX|*.docx|DOC|*.doc";
+            openFile.Filter = "PDF|*.pdf";
 
             if (openFile.ShowDialog() == DialogResult.OK)
             {
@@ -63,28 +67,57 @@ namespace ContractDataGenerator_WindowsFormsApp
                 }
                 // Save copy to destinationPath
                 File.Copy(fileName, destinationPath, false);
-
                 ComponentInfo.SetLicense("FREE-LIMITED-KEY");
-                var document = DocumentModel.Load(safeFileName);
-                string text = document.Content.ToString();
-                var x = string.Empty;
-                //DocumentModel document = new DocumentModel();
-                //Section section = new Section(document);
-                //document.Sections.Add(section);
-                //Paragraph paragraph = new Paragraph(document);
-                //section.Blocks.Add(paragraph);
-                //Run run = new Run(document, "Hello World!");
-                //paragraph.Inlines.Add(run);
-                //document.Save("Hello World.docx");
+                //var document = DocumentModel.Load(safeFileName);
+                //string text = document.Content.ToString();
 
-                //using (WordDocument document = new WordDocument(fileName))
-                //{
-                //    //Gets the Word document text
-                //    string text = document.GetText();
-                //    //Display Word document's text content.
-                //    Console.WriteLine(text);
-                //    Console.ReadLine();
-                //}
+                using (var document = PdfDocument.Load(safeFileName))
+                {
+                    foreach (var page in document.Pages)
+                    {
+                        var contractWhereInfo = string.Empty;
+                        var contractInvestorInfo = string.Empty;
+                        var contractContractorInfo = string.Empty;
+                        var pageContent = page.Content.ToString();
+                        var whereInfoMatch = Regex.Match(pageContent, 
+                            $@"(?<=Zawarta.w)(.*)(?=pomiędzy)",
+                            RegexOptions.IgnoreCase);
+                        if (whereInfoMatch.Success)
+                        {
+                            contractWhereInfo = whereInfoMatch.Value.ToString()
+                                .Replace("Warszawie", "Warszawa")
+                                .Replace("roku", "r.")
+                                .Trim();
+                        }
+                        var contractInvestorInfoMatch = Regex.Match(pageContent, 
+                            $@"(?<=pomiędzy)(.*)(?=zwaną.+Inwestorem)",
+                            RegexOptions.IgnoreCase);
+                        if (contractInvestorInfoMatch.Success)
+                        {
+                            contractInvestorInfo = contractInvestorInfoMatch.Value.ToString()
+                                .Replace(":", string.Empty)
+                                .Replace("1.", string.Empty)
+                                .Replace("Firmą", string.Empty)
+                                .Replace("wpisaną", "wpisana")
+                                .Replace("reprezentowaną", "reprezentowana")
+                                .Trim();
+                        }
+                        var contractContractorInfoMatch = Regex.Match(pageContent,
+                            $@"(?<=,.a.)(.*)(?=zwaną.+Wykonawcą)",
+                            RegexOptions.IgnoreCase);
+                        if (contractContractorInfoMatch.Success)
+                        {
+                            contractContractorInfo = contractContractorInfoMatch.Value.ToString()
+                                .Replace(":", string.Empty)
+                                .Replace("2.", string.Empty)
+                                .Replace("Firmą", string.Empty)
+                                .Replace("wpisaną", "wpisana")
+                                .Replace("reprezentowaną", "reprezentowana")
+                                .Trim();
+                        }
+                    }
+
+                }
             }
         }
     }

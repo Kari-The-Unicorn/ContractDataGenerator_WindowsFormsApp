@@ -29,10 +29,12 @@ namespace ContractDataGenerator_WindowsFormsApp
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lUploadFileInfo = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.bUploadFile = new System.Windows.Forms.Button();
+            this.ttDocLimitInfo = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,9 +54,9 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.lUploadFileInfo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.lUploadFileInfo.Location = new System.Drawing.Point(28, 16);
             this.lUploadFileInfo.Name = "lUploadFileInfo";
-            this.lUploadFileInfo.Size = new System.Drawing.Size(297, 25);
+            this.lUploadFileInfo.Size = new System.Drawing.Size(197, 25);
             this.lUploadFileInfo.TabIndex = 2;
-            this.lUploadFileInfo.Text = "Wybierz plik (.docx lub .doc)";
+            this.lUploadFileInfo.Text = "Wybierz plik (.pdf)";
             this.lUploadFileInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button2
@@ -78,8 +80,13 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bUploadFile.Size = new System.Drawing.Size(175, 38);
             this.bUploadFile.TabIndex = 0;
             this.bUploadFile.Text = "Wgraj plik";
+            this.ttDocLimitInfo.SetToolTip(this.bUploadFile, "Plik maks. 1 str.");
             this.bUploadFile.UseVisualStyleBackColor = false;
             this.bUploadFile.Click += new System.EventHandler(this.bUploadFile_Click);
+            // 
+            // ttDocLimitInfo
+            // 
+            this.ttDocLimitInfo.IsBalloon = true;
             // 
             // Form1
             // 
@@ -101,6 +108,7 @@ namespace ContractDataGenerator_WindowsFormsApp
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button bUploadFile;
         private System.Windows.Forms.Label lUploadFileInfo;
+        private System.Windows.Forms.ToolTip ttDocLimitInfo;
     }
 }
 
