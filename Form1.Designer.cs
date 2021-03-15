@@ -32,7 +32,7 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lUploadFileInfo = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.bDownloadFile = new System.Windows.Forms.Button();
             this.bUploadFile = new System.Windows.Forms.Button();
             this.ttDocLimitInfo = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
@@ -41,7 +41,7 @@ namespace ContractDataGenerator_WindowsFormsApp
             // panel1
             // 
             this.panel1.Controls.Add(this.lUploadFileInfo);
-            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.bDownloadFile);
             this.panel1.Controls.Add(this.bUploadFile);
             this.panel1.Location = new System.Drawing.Point(12, 47);
             this.panel1.Name = "panel1";
@@ -59,17 +59,18 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.lUploadFileInfo.Text = "Wybierz plik (.pdf)";
             this.lUploadFileInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button2
+            // bDownloadFile
             // 
-            this.button2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.button2.Enabled = false;
-            this.button2.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.button2.Location = new System.Drawing.Point(23, 189);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(260, 38);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Pobierz plik z danymi";
-            this.button2.UseVisualStyleBackColor = false;
+            this.bDownloadFile.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.bDownloadFile.Enabled = false;
+            this.bDownloadFile.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.bDownloadFile.Location = new System.Drawing.Point(23, 189);
+            this.bDownloadFile.Name = "bDownloadFile";
+            this.bDownloadFile.Size = new System.Drawing.Size(260, 38);
+            this.bDownloadFile.TabIndex = 1;
+            this.bDownloadFile.Text = "Pobierz plik z danymi";
+            this.bDownloadFile.UseVisualStyleBackColor = false;
+            this.bDownloadFile.Click += new System.EventHandler(this.bDownloadFile_Click);
             // 
             // bUploadFile
             // 
@@ -105,7 +106,7 @@ namespace ContractDataGenerator_WindowsFormsApp
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bDownloadFile;
         private System.Windows.Forms.Button bUploadFile;
         private System.Windows.Forms.Label lUploadFileInfo;
         private System.Windows.Forms.ToolTip ttDocLimitInfo;

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CsvHelper;
+using GemBox.Pdf;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using GemBox.Pdf;
-using GemBox.Pdf.Content;
 
 namespace ContractDataGenerator_WindowsFormsApp
 {
@@ -13,6 +14,8 @@ namespace ContractDataGenerator_WindowsFormsApp
         private string fileName;
 
         private string safeFileName;
+
+        private string newFilePath;
 
         public Form1()
         {
@@ -39,7 +42,7 @@ namespace ContractDataGenerator_WindowsFormsApp
                 }
                 else
                 {
-                    errorMessage = "Proszę załączyć plik w formacie .DOCX lub .DOC.";
+                    errorMessage = "Proszę załączyć 1 stronicowy plik w formacie .PDF.";
                     MessageBox.Show(errorMessage);
                 }
 
@@ -48,18 +51,18 @@ namespace ContractDataGenerator_WindowsFormsApp
                 if (File.Exists(destinationPath))
                 {
                     string extens = string.Empty;
-                    if (destinationPath.Contains("docx"))
-                    {
-                        extens = ".docx";
-                    }
-                    else
-                    {
-                        extens = ".doc";
-                    }
+                    //if (destinationPath.Contains("docx"))
+                    //{
+                    //    extens = ".docx";
+                    //}
+                    //else
+                    //{
+                    //    extens = ".doc";
+                    //}
 
                     destinationPath = destinationPath
-                        .Replace(".docx", string.Empty)
-                        .Replace(".doc", string.Empty) + "_" + DateTime.Now.ToString()
+                        //.Replace(".docx", string.Empty)
+                        .Replace(".pdf", string.Empty) + "_" + DateTime.Now.ToString()
                         .Replace("/", string.Empty)
                         .Replace(":", string.Empty)
                         .Replace(" ", string.Empty)
@@ -79,7 +82,7 @@ namespace ContractDataGenerator_WindowsFormsApp
                         var contractInvestorInfo = string.Empty;
                         var contractContractorInfo = string.Empty;
                         var pageContent = page.Content.ToString();
-                        var whereInfoMatch = Regex.Match(pageContent, 
+                        var whereInfoMatch = Regex.Match(pageContent,
                             $@"(?<=Zawarta.w)(.*)(?=pomiędzy)",
                             RegexOptions.IgnoreCase);
                         if (whereInfoMatch.Success)
@@ -89,7 +92,7 @@ namespace ContractDataGenerator_WindowsFormsApp
                                 .Replace("roku", "r.")
                                 .Trim();
                         }
-                        var contractInvestorInfoMatch = Regex.Match(pageContent, 
+                        var contractInvestorInfoMatch = Regex.Match(pageContent,
                             $@"(?<=pomiędzy)(.*)(?=zwaną.+Inwestorem)",
                             RegexOptions.IgnoreCase);
                         if (contractInvestorInfoMatch.Success)
@@ -115,9 +118,59 @@ namespace ContractDataGenerator_WindowsFormsApp
                                 .Replace("reprezentowaną", "reprezentowana")
                                 .Trim();
                         }
+                        var today = DateTime.Today.Date.ToShortDateString().ToString().Replace(@"/", string.Empty);
+                        newFilePath = Directory.GetCurrentDirectory().ToString() +
+                            "\\UserFiles\\" + safeFileName + today + ".csv";
+                        using (var writer = new StreamWriter(newFilePath))
+                        using (var csvWriter = new CsvWriter(writer, CultureInfo.GetCultureInfo("en-GB")))
+                        {
+                            var records = new List<Header>();
+                            records.Add(new Header
+                            {
+                                DataMiejsce = contractWhereInfo,
+                                Inwestor = contractInvestorInfo,
+                                Wykonawca = contractContractorInfo,
+                            });
+                            csvWriter.WriteRecords(records);
+                        }
+                        bDownloadFile.Enabled = true;
                     }
-
                 }
+            }
+        }
+
+        private void bDownloadFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //var form = new Form1();
+                //DialogResult result = form.ShowDialog();
+                //if (result == DialogResult.OK) // Test result.
+                //{
+                //    string pathDestination = newFilePath;
+                //    //Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Files");
+                //    foreach (string item in form.)
+                //    {
+                //        File.Copy(item, Path.Combine(pathDestination, Path.GetFileName(item)));
+                //    }
+                //}
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    
+                        // Can use dialog.FileName
+                        using (Stream stream = saveFileDialog.OpenFile())
+                        {
+                            // Save data
+                        }
+                    
+
+                    //File.WriteAllText(newFilePath);
+                }
+            }
+            catch
+            {
+                MessageBox.Show(newFilePath + " - ścieżka jest nieprawidłowa");
             }
         }
     }
