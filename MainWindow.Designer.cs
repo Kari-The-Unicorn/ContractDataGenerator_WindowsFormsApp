@@ -1,7 +1,7 @@
 ﻿
 namespace ContractDataGenerator_WindowsFormsApp
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -31,15 +31,18 @@ namespace ContractDataGenerator_WindowsFormsApp
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bUploadText = new System.Windows.Forms.Button();
             this.lUploadFileInfo = new System.Windows.Forms.Label();
             this.bDownloadFile = new System.Windows.Forms.Button();
             this.bUploadFile = new System.Windows.Forms.Button();
             this.ttDocLimitInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.ttUploadText = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.bUploadText);
             this.panel1.Controls.Add(this.lUploadFileInfo);
             this.panel1.Controls.Add(this.bDownloadFile);
             this.panel1.Controls.Add(this.bUploadFile);
@@ -47,6 +50,19 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(776, 288);
             this.panel1.TabIndex = 0;
+            // 
+            // bUploadText
+            // 
+            this.bUploadText.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.bUploadText.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.bUploadText.Location = new System.Drawing.Point(23, 124);
+            this.bUploadText.Name = "bUploadText";
+            this.bUploadText.Size = new System.Drawing.Size(175, 38);
+            this.bUploadText.TabIndex = 3;
+            this.bUploadText.Text = "Wgraj tekst";
+            this.ttUploadText.SetToolTip(this.bUploadText, "Wgraj tekst (nowe okno)");
+            this.bUploadText.UseVisualStyleBackColor = false;
+            this.bUploadText.Click += new System.EventHandler(this.bUploadText_Click);
             // 
             // lUploadFileInfo
             // 
@@ -89,13 +105,17 @@ namespace ContractDataGenerator_WindowsFormsApp
             // 
             this.ttDocLimitInfo.IsBalloon = true;
             // 
-            // Form1
+            // ttUploadText
+            // 
+            this.ttUploadText.IsBalloon = true;
+            // 
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.panel1);
-            this.Name = "Form1";
+            this.Name = "MainWindow";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -110,6 +130,8 @@ namespace ContractDataGenerator_WindowsFormsApp
         private System.Windows.Forms.Button bUploadFile;
         private System.Windows.Forms.Label lUploadFileInfo;
         private System.Windows.Forms.ToolTip ttDocLimitInfo;
+        private System.Windows.Forms.Button bUploadText;
+        private System.Windows.Forms.ToolTip ttUploadText;
     }
 }
 

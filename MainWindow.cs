@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace ContractDataGenerator_WindowsFormsApp
 {
-    public partial class Form1 : Form
+    public partial class MainWindow : Form
     {
         private string fileName;
 
@@ -17,7 +17,7 @@ namespace ContractDataGenerator_WindowsFormsApp
 
         private string newFilePath;
 
-        public Form1()
+        public MainWindow()
         {
             InitializeComponent();
         }
@@ -172,6 +172,12 @@ namespace ContractDataGenerator_WindowsFormsApp
             {
                 MessageBox.Show(newFilePath + " - ścieżka jest nieprawidłowa");
             }
+        }
+
+        private void bUploadText_Click(object sender, EventArgs e)
+        {
+            var uploadForm = new UploadText();
+            uploadForm.ShowDialog();
         }
     }
 }
