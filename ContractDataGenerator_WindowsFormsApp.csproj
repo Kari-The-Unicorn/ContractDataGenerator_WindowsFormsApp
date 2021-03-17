@@ -118,6 +118,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UploadText.resx">
+      <DependentUpon>UploadText.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="bin\Debug\ContractDataGenerator_WindowsFormsApp.exe.config" />
     <None Include="bin\Debug\Hello World.docx" />
     <None Include="packages.config" />

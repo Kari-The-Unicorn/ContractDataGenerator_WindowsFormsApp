@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ContractDataGenerator_WindowsFormsApp
@@ -15,6 +8,23 @@ namespace ContractDataGenerator_WindowsFormsApp
         public UploadText()
         {
             InitializeComponent();
+        }
+
+        private void bUploadFile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string textToLoad = rtbUploadText.Text;
+                if (!string.IsNullOrEmpty(textToLoad))
+                {
+
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Coś poszło nie tak.");
+            }
+
         }
     }
 }

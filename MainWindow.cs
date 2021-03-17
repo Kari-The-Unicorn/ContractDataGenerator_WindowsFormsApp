@@ -35,14 +35,13 @@ namespace ContractDataGenerator_WindowsFormsApp
                 MessageBox.Show("Kliknij OK żeby potwierdzić plik: " + openFile.SafeFileName + ".");
                 if (openFile.FileName != null)
                 {
-                    //lUploadFileInfo.Text = "Wybrany plik: " + openFile.SafeFileName;
+                    lUploadFileInfo.Text = "Wybrany plik: " + openFile.SafeFileName;
                     fileName = openFile.FileName;
                     safeFileName = openFile.SafeFileName;
-                    //safeFileName = "Hello World.docx";
                 }
                 else
                 {
-                    errorMessage = "Proszę załączyć 1 stronicowy plik w formacie .PDF.";
+                    errorMessage = "Proszę załączyć 1-stronicowy plik w formacie .PDF.";
                     MessageBox.Show(errorMessage);
                 }
 
@@ -82,61 +81,87 @@ namespace ContractDataGenerator_WindowsFormsApp
                         var contractInvestorInfo = string.Empty;
                         var contractContractorInfo = string.Empty;
                         var pageContent = page.Content.ToString();
-                        var whereInfoMatch = Regex.Match(pageContent,
-                            $@"(?<=Zawarta.w)(.*)(?=pomiędzy)",
-                            RegexOptions.IgnoreCase);
-                        if (whereInfoMatch.Success)
-                        {
-                            contractWhereInfo = whereInfoMatch.Value.ToString()
-                                .Replace("Warszawie", "Warszawa")
-                                .Replace("roku", "r.")
-                                .Trim();
-                        }
-                        var contractInvestorInfoMatch = Regex.Match(pageContent,
-                            $@"(?<=pomiędzy)(.*)(?=zwaną.+Inwestorem)",
-                            RegexOptions.IgnoreCase);
-                        if (contractInvestorInfoMatch.Success)
-                        {
-                            contractInvestorInfo = contractInvestorInfoMatch.Value.ToString()
-                                .Replace(":", string.Empty)
-                                .Replace("1.", string.Empty)
-                                .Replace("Firmą", string.Empty)
-                                .Replace("wpisaną", "wpisana")
-                                .Replace("reprezentowaną", "reprezentowana")
-                                .Trim();
-                        }
-                        var contractContractorInfoMatch = Regex.Match(pageContent,
-                            $@"(?<=,.a.)(.*)(?=zwaną.+Wykonawcą)",
-                            RegexOptions.IgnoreCase);
-                        if (contractContractorInfoMatch.Success)
-                        {
-                            contractContractorInfo = contractContractorInfoMatch.Value.ToString()
-                                .Replace(":", string.Empty)
-                                .Replace("2.", string.Empty)
-                                .Replace("Firmą", string.Empty)
-                                .Replace("wpisaną", "wpisana")
-                                .Replace("reprezentowaną", "reprezentowana")
-                                .Trim();
-                        }
+                        contractWhereInfo = GetContractWhere(contractWhereInfo, pageContent);
+                        contractInvestorInfo = GetContractInvestor(contractInvestorInfo, pageContent);
+                        contractContractorInfo = GetContractContractor(contractContractorInfo, pageContent);
                         var today = DateTime.Today.Date.ToShortDateString().ToString().Replace(@"/", string.Empty);
                         newFilePath = Directory.GetCurrentDirectory().ToString() +
                             "\\UserFiles\\" + safeFileName + today + ".csv";
-                        using (var writer = new StreamWriter(newFilePath))
-                        using (var csvWriter = new CsvWriter(writer, CultureInfo.GetCultureInfo("en-GB")))
-                        {
-                            var records = new List<Header>();
-                            records.Add(new Header
-                            {
-                                DataMiejsce = contractWhereInfo,
-                                Inwestor = contractInvestorInfo,
-                                Wykonawca = contractContractorInfo,
-                            });
-                            csvWriter.WriteRecords(records);
-                        }
+                        WriteToCsv(contractWhereInfo, contractInvestorInfo, contractContractorInfo);
                         bDownloadFile.Enabled = true;
                     }
                 }
             }
+        }
+
+        private void WriteToCsv(string contractWhereInfo, string contractInvestorInfo, string contractContractorInfo)
+        {
+            using (var writer = new StreamWriter(newFilePath))
+            using (var csvWriter = new CsvWriter(writer, CultureInfo.GetCultureInfo("en-GB")))
+            {
+                var records = new List<Header>();
+                records.Add(new Header
+                {
+                    DataMiejsce = contractWhereInfo,
+                    Inwestor = contractInvestorInfo,
+                    Wykonawca = contractContractorInfo,
+                });
+                csvWriter.WriteRecords(records);
+            }
+        }
+
+        private static string GetContractContractor(string contractContractorInfo, string pageContent)
+        {
+            var contractContractorInfoMatch = Regex.Match(pageContent,
+                                        $@"(?<=,.a.)(.*)(?=zwaną.+Wykonawcą)",
+                                        RegexOptions.IgnoreCase);
+            if (contractContractorInfoMatch.Success)
+            {
+                contractContractorInfo = contractContractorInfoMatch.Value.ToString()
+                    .Replace(":", string.Empty)
+                    .Replace("2.", string.Empty)
+                    .Replace("Firmą", string.Empty)
+                    .Replace("wpisaną", "wpisana")
+                    .Replace("reprezentowaną", "reprezentowana")
+                    .Trim();
+            }
+
+            return contractContractorInfo;
+        }
+
+        private static string GetContractInvestor(string contractInvestorInfo, string pageContent)
+        {
+            var contractInvestorInfoMatch = Regex.Match(pageContent,
+                                        $@"(?<=pomiędzy)(.*)(?=zwaną.+Inwestorem)",
+                                        RegexOptions.IgnoreCase);
+            if (contractInvestorInfoMatch.Success)
+            {
+                contractInvestorInfo = contractInvestorInfoMatch.Value.ToString()
+                    .Replace(":", string.Empty)
+                    .Replace("1.", string.Empty)
+                    .Replace("Firmą", string.Empty)
+                    .Replace("wpisaną", "wpisana")
+                    .Replace("reprezentowaną", "reprezentowana")
+                    .Trim();
+            }
+
+            return contractInvestorInfo;
+        }
+
+        private static string GetContractWhere(string contractWhereInfo, string pageContent)
+        {
+            var whereInfoMatch = Regex.Match(pageContent,
+                                        $@"(?<=Zawarta.w)(.*)(?=pomiędzy)",
+                                        RegexOptions.IgnoreCase);
+            if (whereInfoMatch.Success)
+            {
+                contractWhereInfo = whereInfoMatch.Value.ToString()
+                    .Replace("Warszawie", "Warszawa")
+                    .Replace("roku", "r.")
+                    .Trim();
+            }
+
+            return contractWhereInfo;
         }
 
         private void bDownloadFile_Click(object sender, EventArgs e)
@@ -163,8 +188,6 @@ namespace ContractDataGenerator_WindowsFormsApp
                         {
                             // Save data
                         }
-                    
-
                     //File.WriteAllText(newFilePath);
                 }
             }
