@@ -1,12 +1,13 @@
-﻿using Code7248.word_reader;
-using CsvHelper;
-using GemBox.Pdf;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using Code7248.word_reader;
+using CsvHelper;
+using GemBox.Pdf;
 
 namespace ContractDataGenerator_WindowsFormsApp
 {
@@ -234,15 +235,6 @@ namespace ContractDataGenerator_WindowsFormsApp
                 if (File.Exists(destinationPath))
                 {
                     string extens = string.Empty;
-                    //if (destinationPath.Contains("docx"))
-                    //{
-                    //    extens = ".docx";
-                    //}
-                    //else
-                    //{
-                    //    extens = ".doc";
-                    //}
-
                     destinationPath = destinationPath
                         .Replace(".docx", string.Empty) 
                         + "_" + 
@@ -272,6 +264,42 @@ namespace ContractDataGenerator_WindowsFormsApp
                 WriteToCsv(contractWhereInfo, contractInvestorInfo, contractContractorInfo);
                 bDownloadFile.Enabled = true;
             }
+        }
+
+        private void bDownloadFile_Paint(object sender, PaintEventArgs e)
+        {
+            // 3D button style
+            ControlPaint.DrawBorder(e.Graphics, bDownloadFile.ClientRectangle, SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset);
+        }
+
+        private void bUploadText_Paint(object sender, PaintEventArgs e)
+        {
+            // 3D button style
+            ControlPaint.DrawBorder(e.Graphics, bUploadText.ClientRectangle, SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset);
+        }
+
+        private void bUploadDoc_Paint(object sender, PaintEventArgs e)
+        {
+            // 3D button style
+            ControlPaint.DrawBorder(e.Graphics, bUploadDoc.ClientRectangle, SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset);
+        }
+
+        private void bUploadPdf_Paint(object sender, PaintEventArgs e)
+        {
+            // 3D button style
+            ControlPaint.DrawBorder(e.Graphics, bUploadPdf.ClientRectangle, SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset,
+            SystemColors.ControlLightLight, 5, ButtonBorderStyle.Outset);
         }
     }
 }

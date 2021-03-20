@@ -55,6 +55,7 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bUploadFile.Text = "Wgraj dane";
             this.bUploadFile.UseVisualStyleBackColor = false;
             this.bUploadFile.Click += new System.EventHandler(this.bUploadFile_Click);
+            this.bUploadFile.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadFile_Paint);
             // 
             // ttUploadDataClick
             // 

@@ -65,12 +65,14 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bUploadText.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.bUploadText.Location = new System.Drawing.Point(42, 154);
             this.bUploadText.Name = "bUploadText";
-            this.bUploadText.Size = new System.Drawing.Size(264, 38);
+            this.bUploadText.Size = new System.Drawing.Size(264, 46);
             this.bUploadText.TabIndex = 3;
             this.bUploadText.Text = "Wgraj tekst";
-            this.ttUploadText.SetToolTip(this.bUploadText, "Wgraj tekst (nowe okno)");
+            this.ttUploadText.SetToolTip(this.bUploadText, "Wgraj tekst (w nowym oknie wklej tekst, a następnie kliknij przycisk \"Wgraj dane\"" +
+        ")");
             this.bUploadText.UseVisualStyleBackColor = false;
             this.bUploadText.Click += new System.EventHandler(this.bUploadText_Click);
+            this.bUploadText.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadText_Paint);
             // 
             // lUploadFileInfo
             // 
@@ -89,14 +91,16 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bDownloadFile.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.bDownloadFile.Dock = System.Windows.Forms.DockStyle.Top;
             this.bDownloadFile.Enabled = false;
+            this.bDownloadFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bDownloadFile.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.bDownloadFile.Location = new System.Drawing.Point(0, 0);
             this.bDownloadFile.Name = "bDownloadFile";
-            this.bDownloadFile.Size = new System.Drawing.Size(260, 38);
+            this.bDownloadFile.Size = new System.Drawing.Size(349, 46);
             this.bDownloadFile.TabIndex = 1;
-            this.bDownloadFile.Text = "Pobierz plik z danymi";
+            this.bDownloadFile.Text = "Pobierz plik z danymi (.csv)";
             this.bDownloadFile.UseVisualStyleBackColor = false;
             this.bDownloadFile.Click += new System.EventHandler(this.bDownloadFile_Click);
+            this.bDownloadFile.Paint += new System.Windows.Forms.PaintEventHandler(this.bDownloadFile_Paint);
             // 
             // bUploadPdf
             // 
@@ -108,12 +112,13 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bUploadPdf.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.bUploadPdf.Location = new System.Drawing.Point(42, 48);
             this.bUploadPdf.Name = "bUploadPdf";
-            this.bUploadPdf.Size = new System.Drawing.Size(264, 38);
+            this.bUploadPdf.Size = new System.Drawing.Size(264, 48);
             this.bUploadPdf.TabIndex = 0;
             this.bUploadPdf.Text = "Wgraj plik .pdf";
             this.ttDocLimitInfo.SetToolTip(this.bUploadPdf, "Plik maks. 1 str.");
             this.bUploadPdf.UseVisualStyleBackColor = false;
             this.bUploadPdf.Click += new System.EventHandler(this.bUploadFile_Click);
+            this.bUploadPdf.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadPdf_Paint);
             // 
             // ttDocLimitInfo
             // 
@@ -126,9 +131,9 @@ namespace ContractDataGenerator_WindowsFormsApp
             // pMainDownload
             // 
             this.pMainDownload.Controls.Add(this.bDownloadFile);
-            this.pMainDownload.Location = new System.Drawing.Point(267, 341);
+            this.pMainDownload.Location = new System.Drawing.Point(221, 341);
             this.pMainDownload.Name = "pMainDownload";
-            this.pMainDownload.Size = new System.Drawing.Size(260, 100);
+            this.pMainDownload.Size = new System.Drawing.Size(349, 100);
             this.pMainDownload.TabIndex = 2;
             // 
             // bUploadDoc
@@ -141,12 +146,12 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bUploadDoc.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.bUploadDoc.Location = new System.Drawing.Point(42, 102);
             this.bUploadDoc.Name = "bUploadDoc";
-            this.bUploadDoc.Size = new System.Drawing.Size(264, 38);
+            this.bUploadDoc.Size = new System.Drawing.Size(264, 46);
             this.bUploadDoc.TabIndex = 4;
-            this.bUploadDoc.Text = "Wgraj plik .doc";
-            this.ttDocLimitInfo.SetToolTip(this.bUploadDoc, "Plik maks. 1 str.");
+            this.bUploadDoc.Text = "Wgraj plik .doc/.docx";
             this.bUploadDoc.UseVisualStyleBackColor = false;
             this.bUploadDoc.Click += new System.EventHandler(this.bUploadDoc_Click);
+            this.bUploadDoc.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadDoc_Paint);
             // 
             // MainWindow
             // 
