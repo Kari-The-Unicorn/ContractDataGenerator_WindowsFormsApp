@@ -1,4 +1,5 @@
-﻿using CsvHelper;
+﻿using Code7248.word_reader;
+using CsvHelper;
 using GemBox.Pdf;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace ContractDataGenerator_WindowsFormsApp
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Title = "Wybierz plik";
             //openFile.Filter = "DOCX|*.docx|DOC|*.doc";
-            openFile.Filter = "PDF|*.pdf";
+            //openFile.Filter = "PDF|*.pdf";
 
             if (openFile.ShowDialog() == DialogResult.OK)
             {
@@ -84,7 +85,10 @@ namespace ContractDataGenerator_WindowsFormsApp
                         contractWhereInfo = GetContractWhere(contractWhereInfo, pageContent);
                         contractInvestorInfo = GetContractInvestor(contractInvestorInfo, pageContent);
                         contractContractorInfo = GetContractContractor(contractContractorInfo, pageContent);
-                        var today = DateTime.Today.Date.ToShortDateString().ToString().Replace(@"/", string.Empty);
+                        //var today = DateTime.Today.Date.ToShortDateString().ToString().Replace(@"/", string.Empty)
+                        //    +"_" + new Random().Next(100);
+                        var today = DateTime.Today.Date.ToShortDateString().ToString().Replace(@"/", string.Empty)
+                            + "_" + DateTime.Today.TimeOfDay.ToString();
                         newFilePath = Directory.GetCurrentDirectory().ToString() +
                             "\\UserFiles\\" + safeFileName + today + ".csv";
                         WriteToCsv(contractWhereInfo, contractInvestorInfo, contractContractorInfo);
@@ -201,6 +205,73 @@ namespace ContractDataGenerator_WindowsFormsApp
         {
             var uploadForm = new UploadText();
             uploadForm.ShowDialog();
+        }
+
+        private void bUploadDoc_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            openFile.Title = "Wybierz plik";
+            openFile.Filter = "DOCX|*.docx|DOC|*.doc";
+
+            if (openFile.ShowDialog() == DialogResult.OK)
+            {
+                string errorMessage = string.Empty;
+                MessageBox.Show("Kliknij OK żeby potwierdzić plik: " + openFile.SafeFileName + ".");
+                if (openFile.FileName != null)
+                {
+                    lUploadFileInfo.Text = "Wybrany plik: " + openFile.SafeFileName;
+                    fileName = openFile.FileName;
+                    safeFileName = openFile.SafeFileName;
+                }
+                else
+                {
+                    errorMessage = "Proszę załączyć 1-stronicowy plik w formacie .PDF.";
+                    MessageBox.Show(errorMessage);
+                }
+
+                //Copy file to destination
+                var destinationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory) + @"UserFiles\" + safeFileName;
+                if (File.Exists(destinationPath))
+                {
+                    string extens = string.Empty;
+                    //if (destinationPath.Contains("docx"))
+                    //{
+                    //    extens = ".docx";
+                    //}
+                    //else
+                    //{
+                    //    extens = ".doc";
+                    //}
+
+                    destinationPath = destinationPath
+                        .Replace(".docx", string.Empty) 
+                        + "_" + 
+                        DateTime.Now.ToString()
+                        .Replace("/", string.Empty)
+                        .Replace(":", string.Empty)
+                        .Replace(" ", string.Empty)
+                        + extens;
+                }
+                // Save copy to destinationPath
+                File.Copy(fileName, destinationPath, false);
+                // Extract text from doc file
+                TextExtractor extractor = new TextExtractor(destinationPath);
+                string downloadedText = extractor.ExtractText();
+                // Extract selected text from doc file
+                var contractWhereInfo = string.Empty;
+                var contractInvestorInfo = string.Empty;
+                var contractContractorInfo = string.Empty;
+                contractWhereInfo = GetContractWhere(contractWhereInfo, downloadedText);
+                contractInvestorInfo = GetContractInvestor(contractInvestorInfo, downloadedText);
+                contractContractorInfo = GetContractContractor(contractContractorInfo, downloadedText);
+                var today = DateTime.Today.Date.ToShortDateString().ToString().Replace(@"/", string.Empty)
+                            + "_" + DateTime.Now.ToString("hh:mm:ss").Replace(":", string.Empty).Trim();
+                newFilePath = Directory.GetCurrentDirectory().ToString() +
+                    "\\UserFiles\\" + safeFileName + today + ".csv";
+                // Create csv
+                WriteToCsv(contractWhereInfo, contractInvestorInfo, contractContractorInfo);
+                bDownloadFile.Enabled = true;
+            }
         }
     }
 }
