@@ -31,15 +31,15 @@ namespace ContractDataGenerator_WindowsFormsApp
         {
             this.components = new System.ComponentModel.Container();
             this.pMainUload = new System.Windows.Forms.Panel();
+            this.bUploadDoc = new System.Windows.Forms.Button();
             this.bUploadText = new System.Windows.Forms.Button();
             this.lUploadFileInfo = new System.Windows.Forms.Label();
-            this.bDownloadFile = new System.Windows.Forms.Button();
             this.bUploadPdf = new System.Windows.Forms.Button();
+            this.bDownloadFile = new System.Windows.Forms.Button();
             this.ttDocLimitInfo = new System.Windows.Forms.ToolTip(this.components);
             this.ttUploadText = new System.Windows.Forms.ToolTip(this.components);
             this.pMainDownload = new System.Windows.Forms.Panel();
             this.ttDownloadText = new System.Windows.Forms.ToolTip(this.components);
-            this.bUploadDoc = new System.Windows.Forms.Button();
             this.pMainUload.SuspendLayout();
             this.pMainDownload.SuspendLayout();
             this.SuspendLayout();
@@ -55,6 +55,23 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.pMainUload.Size = new System.Drawing.Size(349, 288);
             this.pMainUload.TabIndex = 0;
             // 
+            // bUploadDoc
+            // 
+            this.bUploadDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bUploadDoc.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.bUploadDoc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bUploadDoc.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.bUploadDoc.Location = new System.Drawing.Point(42, 47);
+            this.bUploadDoc.Name = "bUploadDoc";
+            this.bUploadDoc.Size = new System.Drawing.Size(264, 46);
+            this.bUploadDoc.TabIndex = 4;
+            this.bUploadDoc.Text = "Wgraj plik .doc/.docx";
+            this.bUploadDoc.UseVisualStyleBackColor = false;
+            this.bUploadDoc.Click += new System.EventHandler(this.bUploadDoc_Click);
+            this.bUploadDoc.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadDoc_Paint);
+            // 
             // bUploadText
             // 
             this.bUploadText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -63,7 +80,7 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bUploadText.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.bUploadText.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bUploadText.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.bUploadText.Location = new System.Drawing.Point(42, 154);
+            this.bUploadText.Location = new System.Drawing.Point(42, 99);
             this.bUploadText.Name = "bUploadText";
             this.bUploadText.Size = new System.Drawing.Size(264, 46);
             this.bUploadText.TabIndex = 3;
@@ -81,10 +98,29 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.lUploadFileInfo.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.lUploadFileInfo.Location = new System.Drawing.Point(0, 0);
             this.lUploadFileInfo.Name = "lUploadFileInfo";
-            this.lUploadFileInfo.Size = new System.Drawing.Size(197, 25);
+            this.lUploadFileInfo.Size = new System.Drawing.Size(141, 25);
             this.lUploadFileInfo.TabIndex = 2;
-            this.lUploadFileInfo.Text = "Wybierz plik (.pdf)";
+            this.lUploadFileInfo.Text = "Wybierz plik ";
             this.lUploadFileInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // bUploadPdf
+            // 
+            this.bUploadPdf.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bUploadPdf.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.bUploadPdf.Enabled = false;
+            this.bUploadPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bUploadPdf.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.bUploadPdf.Location = new System.Drawing.Point(42, 151);
+            this.bUploadPdf.Name = "bUploadPdf";
+            this.bUploadPdf.Size = new System.Drawing.Size(264, 48);
+            this.bUploadPdf.TabIndex = 0;
+            this.bUploadPdf.Text = "Wgraj plik .pdf";
+            this.ttDocLimitInfo.SetToolTip(this.bUploadPdf, "Plik maks. 1 str.");
+            this.bUploadPdf.UseVisualStyleBackColor = false;
+            this.bUploadPdf.Click += new System.EventHandler(this.bUploadPdf_Click);
+            this.bUploadPdf.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadPdf_Paint);
             // 
             // bDownloadFile
             // 
@@ -102,24 +138,6 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bDownloadFile.Click += new System.EventHandler(this.bDownloadFile_Click);
             this.bDownloadFile.Paint += new System.Windows.Forms.PaintEventHandler(this.bDownloadFile_Paint);
             // 
-            // bUploadPdf
-            // 
-            this.bUploadPdf.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bUploadPdf.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.bUploadPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bUploadPdf.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.bUploadPdf.Location = new System.Drawing.Point(42, 48);
-            this.bUploadPdf.Name = "bUploadPdf";
-            this.bUploadPdf.Size = new System.Drawing.Size(264, 48);
-            this.bUploadPdf.TabIndex = 0;
-            this.bUploadPdf.Text = "Wgraj plik .pdf";
-            this.ttDocLimitInfo.SetToolTip(this.bUploadPdf, "Plik maks. 1 str.");
-            this.bUploadPdf.UseVisualStyleBackColor = false;
-            this.bUploadPdf.Click += new System.EventHandler(this.bUploadFile_Click);
-            this.bUploadPdf.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadPdf_Paint);
-            // 
             // ttDocLimitInfo
             // 
             this.ttDocLimitInfo.IsBalloon = true;
@@ -135,23 +153,6 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.pMainDownload.Name = "pMainDownload";
             this.pMainDownload.Size = new System.Drawing.Size(349, 100);
             this.pMainDownload.TabIndex = 2;
-            // 
-            // bUploadDoc
-            // 
-            this.bUploadDoc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bUploadDoc.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.bUploadDoc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bUploadDoc.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.bUploadDoc.Location = new System.Drawing.Point(42, 102);
-            this.bUploadDoc.Name = "bUploadDoc";
-            this.bUploadDoc.Size = new System.Drawing.Size(264, 46);
-            this.bUploadDoc.TabIndex = 4;
-            this.bUploadDoc.Text = "Wgraj plik .doc/.docx";
-            this.bUploadDoc.UseVisualStyleBackColor = false;
-            this.bUploadDoc.Click += new System.EventHandler(this.bUploadDoc_Click);
-            this.bUploadDoc.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadDoc_Paint);
             // 
             // MainWindow
             // 
