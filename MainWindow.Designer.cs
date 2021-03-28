@@ -34,12 +34,12 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bUploadDoc = new System.Windows.Forms.Button();
             this.bUploadText = new System.Windows.Forms.Button();
             this.lUploadFileInfo = new System.Windows.Forms.Label();
-            this.bUploadPdf = new System.Windows.Forms.Button();
             this.bDownloadFile = new System.Windows.Forms.Button();
             this.ttDocLimitInfo = new System.Windows.Forms.ToolTip(this.components);
             this.ttUploadText = new System.Windows.Forms.ToolTip(this.components);
             this.pMainDownload = new System.Windows.Forms.Panel();
             this.ttDownloadText = new System.Windows.Forms.ToolTip(this.components);
+            this.lDownloadFile = new System.Windows.Forms.Label();
             this.pMainUload.SuspendLayout();
             this.pMainDownload.SuspendLayout();
             this.SuspendLayout();
@@ -49,7 +49,6 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.pMainUload.Controls.Add(this.bUploadDoc);
             this.pMainUload.Controls.Add(this.bUploadText);
             this.pMainUload.Controls.Add(this.lUploadFileInfo);
-            this.pMainUload.Controls.Add(this.bUploadPdf);
             this.pMainUload.Location = new System.Drawing.Point(221, 47);
             this.pMainUload.Name = "pMainUload";
             this.pMainUload.Size = new System.Drawing.Size(349, 288);
@@ -103,33 +102,14 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.lUploadFileInfo.Text = "Wybierz plik ";
             this.lUploadFileInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // bUploadPdf
-            // 
-            this.bUploadPdf.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bUploadPdf.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.bUploadPdf.Enabled = false;
-            this.bUploadPdf.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bUploadPdf.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.bUploadPdf.Location = new System.Drawing.Point(42, 151);
-            this.bUploadPdf.Name = "bUploadPdf";
-            this.bUploadPdf.Size = new System.Drawing.Size(264, 48);
-            this.bUploadPdf.TabIndex = 0;
-            this.bUploadPdf.Text = "Wgraj plik .pdf";
-            this.ttDocLimitInfo.SetToolTip(this.bUploadPdf, "Plik maks. 1 str.");
-            this.bUploadPdf.UseVisualStyleBackColor = false;
-            this.bUploadPdf.Click += new System.EventHandler(this.bUploadPdf_Click);
-            this.bUploadPdf.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadPdf_Paint);
-            // 
             // bDownloadFile
             // 
             this.bDownloadFile.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.bDownloadFile.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bDownloadFile.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bDownloadFile.Enabled = false;
             this.bDownloadFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bDownloadFile.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.bDownloadFile.Location = new System.Drawing.Point(0, 0);
+            this.bDownloadFile.Location = new System.Drawing.Point(0, 61);
             this.bDownloadFile.Name = "bDownloadFile";
             this.bDownloadFile.Size = new System.Drawing.Size(349, 46);
             this.bDownloadFile.TabIndex = 1;
@@ -148,11 +128,24 @@ namespace ContractDataGenerator_WindowsFormsApp
             // 
             // pMainDownload
             // 
+            this.pMainDownload.Controls.Add(this.lDownloadFile);
             this.pMainDownload.Controls.Add(this.bDownloadFile);
-            this.pMainDownload.Location = new System.Drawing.Point(221, 341);
+            this.pMainDownload.Location = new System.Drawing.Point(221, 334);
             this.pMainDownload.Name = "pMainDownload";
-            this.pMainDownload.Size = new System.Drawing.Size(349, 100);
+            this.pMainDownload.Size = new System.Drawing.Size(349, 107);
             this.pMainDownload.TabIndex = 2;
+            // 
+            // lDownloadFile
+            // 
+            this.lDownloadFile.AutoSize = true;
+            this.lDownloadFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lDownloadFile.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.lDownloadFile.Location = new System.Drawing.Point(0, 0);
+            this.lDownloadFile.Name = "lDownloadFile";
+            this.lDownloadFile.Size = new System.Drawing.Size(266, 25);
+            this.lDownloadFile.TabIndex = 3;
+            this.lDownloadFile.Text = "Pobierz plik (nieaktywny)";
+            this.lDownloadFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainWindow
             // 
@@ -166,6 +159,7 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.pMainUload.ResumeLayout(false);
             this.pMainUload.PerformLayout();
             this.pMainDownload.ResumeLayout(false);
+            this.pMainDownload.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -174,7 +168,6 @@ namespace ContractDataGenerator_WindowsFormsApp
 
         private System.Windows.Forms.Panel pMainUload;
         private System.Windows.Forms.Button bDownloadFile;
-        private System.Windows.Forms.Button bUploadPdf;
         private System.Windows.Forms.Label lUploadFileInfo;
         private System.Windows.Forms.ToolTip ttDocLimitInfo;
         private System.Windows.Forms.Button bUploadText;
@@ -182,6 +175,7 @@ namespace ContractDataGenerator_WindowsFormsApp
         private System.Windows.Forms.Panel pMainDownload;
         private System.Windows.Forms.ToolTip ttDownloadText;
         private System.Windows.Forms.Button bUploadDoc;
+        private System.Windows.Forms.Label lDownloadFile;
     }
 }
 

@@ -131,6 +131,7 @@ namespace ContractDataGenerator_WindowsFormsApp
                 // Create csv
                 WriteToCsv(contractWhereInfo, contractInvestorInfo, contractContractorInfo);
                 bDownloadFile.Enabled = true;
+                bDownloadFile.Text = "Pobierz plik (aktywny)";
             }
         }
 
