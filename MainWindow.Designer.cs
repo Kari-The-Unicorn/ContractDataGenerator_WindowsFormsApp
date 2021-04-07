@@ -38,8 +38,8 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.ttDocLimitInfo = new System.Windows.Forms.ToolTip(this.components);
             this.ttUploadText = new System.Windows.Forms.ToolTip(this.components);
             this.pMainDownload = new System.Windows.Forms.Panel();
-            this.ttDownloadText = new System.Windows.Forms.ToolTip(this.components);
             this.lDownloadFile = new System.Windows.Forms.Label();
+            this.ttDownloadText = new System.Windows.Forms.ToolTip(this.components);
             this.pMainUload.SuspendLayout();
             this.pMainDownload.SuspendLayout();
             this.SuspendLayout();

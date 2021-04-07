@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Code7248.word_reader;
+using CsvHelper;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using Code7248.word_reader;
-using CsvHelper;
-//using GemBox.Pdf;
 
 namespace ContractDataGenerator_WindowsFormsApp
 {
@@ -23,7 +22,8 @@ namespace ContractDataGenerator_WindowsFormsApp
             InitializeComponent();
         }
 
-        private void WriteToCsv(string contractWhereInfo, string contractInvestorInfo, string contractContractorInfo)
+        private void WriteToCsv(string contractWhereInfo, string contractEmployerInfo, string contractEmployeeInfo,
+            string contractInvestorInfo, string contractValue)
         {
             using (var writer = new StreamWriter(newFilePath))
             using (var csvWriter = new CsvWriter(writer, CultureInfo.GetCultureInfo("en-GB")))
@@ -32,8 +32,10 @@ namespace ContractDataGenerator_WindowsFormsApp
                 records.Add(new Header
                 {
                     DataMiejsce = contractWhereInfo,
+                    Zamawiajacy = contractEmployerInfo,
+                    Wykonawca = contractEmployeeInfo,
                     Inwestor = contractInvestorInfo,
-                    Wykonawca = contractContractorInfo,
+                    WartoscUmowy = contractValue
                 });
                 csvWriter.WriteRecords(records);
             }
@@ -43,17 +45,6 @@ namespace ContractDataGenerator_WindowsFormsApp
         {
             try
             {
-                //var form = new Form1();
-                //DialogResult result = form.ShowDialog();
-                //if (result == DialogResult.OK) // Test result.
-                //{
-                //    string pathDestination = newFilePath;
-                //    //Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "Files");
-                //    foreach (string item in form.)
-                //    {
-                //        File.Copy(item, Path.Combine(pathDestination, Path.GetFileName(item)));
-                //    }
-                //}
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -61,7 +52,6 @@ namespace ContractDataGenerator_WindowsFormsApp
                     {
                         // Save data
                     }
-                    //File.WriteAllText(newFilePath);
                 }
             }
             catch
@@ -94,42 +84,25 @@ namespace ContractDataGenerator_WindowsFormsApp
                 }
                 else
                 {
-                    errorMessage = "Proszę załączyć 1-stronicowy plik w formacie .PDF.";
+                    errorMessage = "Błąd wgrywania pliku.";
                     MessageBox.Show(errorMessage);
                 }
-
-                //Copy file to destination
-                var destinationPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory) + @"UserFiles\" + safeFileName;
-                if (File.Exists(destinationPath))
-                {
-                    string extens = string.Empty;
-                    destinationPath = destinationPath
-                        .Replace(".docx", string.Empty)
-                        + "_" +
-                        DateTime.Now.ToString()
-                        .Replace("/", string.Empty)
-                        .Replace(":", string.Empty)
-                        .Replace(" ", string.Empty)
-                        + extens;
-                }
-                // Save copy to destinationPath
-                File.Copy(fileName, destinationPath, false);
                 // Extract text from doc file
-                TextExtractor extractor = new TextExtractor(destinationPath);
-                string downloadedText = extractor.ExtractText();
+                TextExtractor extractor = new TextExtractor(fileName);
+                string rawDownloadedText = extractor.ExtractText().Replace("\n", " ").Replace("\t", " "); ;
+                string downloadedText = Regex.Replace(rawDownloadedText, $@"\s\s+", " ");
+
                 // Extract selected text from doc file
-                var contractWhereInfo = string.Empty;
-                var contractInvestorInfo = string.Empty;
-                var contractContractorInfo = string.Empty;
-                contractWhereInfo = Helpers.TextHelpers.GetContractWhere(contractWhereInfo, downloadedText);
-                contractInvestorInfo = Helpers.TextHelpers.GetContractInvestor(contractInvestorInfo, downloadedText);
-                contractContractorInfo = Helpers.TextHelpers.GetContractContractor(contractContractorInfo, downloadedText);
-                var today = DateTime.Today.Date.ToShortDateString().ToString().Replace(@"/", string.Empty)
-                            + "_" + DateTime.Now.ToString("hh:mm:ss").Replace(":", string.Empty).Trim();
+                var contractWhereInfo = Helpers.TextHelpers.GetContractWhere(downloadedText);
+                var contractEmployerInfo = Helpers.TextHelpers.GetContractEmployer(downloadedText);
+                var contractEmployeeInfo = Helpers.TextHelpers.GetContractEmployee(downloadedText);
+                var contractInvestorInfo = Helpers.TextHelpers.GetContractInvestor(downloadedText);
+                var contractValue = Helpers.TextHelpers.GetContractValue(downloadedText);
+                var today = DateTime.Now.ToString("ddMMyyyy_HHmmss");
                 newFilePath = Directory.GetCurrentDirectory().ToString() +
-                    "\\UserFiles\\" + safeFileName + today + ".csv";
+                    "\\UserFiles\\" + safeFileName.Replace(".doc", "").Replace(".docx", "") + "_" + today + ".csv";
                 // Create csv
-                WriteToCsv(contractWhereInfo, contractInvestorInfo, contractContractorInfo);
+                WriteToCsv(contractWhereInfo, contractEmployerInfo, contractEmployeeInfo, contractInvestorInfo, contractValue);
                 bDownloadFile.Enabled = true;
                 bDownloadFile.Text = "Pobierz plik (aktywny)";
             }
@@ -148,11 +121,6 @@ namespace ContractDataGenerator_WindowsFormsApp
         private void bUploadDoc_Paint(object sender, PaintEventArgs e)
         {
             Helpers.StyleHelpers.Get3DButtonStyle(bUploadDoc, e);
-        }
-
-        private void bUploadPdf_Paint(object sender, PaintEventArgs e)
-        {
-            Helpers.StyleHelpers.Get3DButtonStyle(bUploadPdf, e);
         }
 
         public void bUploadPdf_Click(object sender, EventArgs e)

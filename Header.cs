@@ -4,8 +4,12 @@
     {
         public string DataMiejsce { get; set; }
 
-        public string Inwestor { get; set; }
+        public string Zamawiajacy { get; set; }
 
         public string Wykonawca { get; set; }
+
+        public string Inwestor { get; set; }
+
+        public string WartoscUmowy { get; set; }
     }
 }
