@@ -10,6 +10,6 @@
 
         public string Inwestor { get; set; }
 
-        public string WartoscUmowy { get; set; }
+        public string WartoscUmowyPLN { get; set; }
     }
 }

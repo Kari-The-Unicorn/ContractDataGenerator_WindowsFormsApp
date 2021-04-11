@@ -1,11 +1,11 @@
-﻿using Code7248.word_reader;
-using CsvHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using CsvHelper;
+using DocumentFormat.OpenXml.Packaging;
 
 namespace ContractDataGenerator_WindowsFormsApp
 {
@@ -70,11 +70,10 @@ namespace ContractDataGenerator_WindowsFormsApp
         {
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Title = "Wybierz plik";
-            openFile.Filter = "DOCX|*.docx|DOC|*.doc";
+            openFile.Filter = "DOCX|*.docx";
 
             if (openFile.ShowDialog() == DialogResult.OK)
             {
-                string errorMessage = string.Empty;
                 MessageBox.Show("Kliknij OK żeby potwierdzić plik: " + openFile.SafeFileName + ".");
                 if (openFile.FileName != null)
                 {
@@ -84,15 +83,19 @@ namespace ContractDataGenerator_WindowsFormsApp
                 }
                 else
                 {
-                    errorMessage = "Błąd wgrywania pliku.";
+                    string errorMessage = "Błąd wgrywania pliku.";
                     MessageBox.Show(errorMessage);
                 }
-                // Extract text from doc file
-                TextExtractor extractor = new TextExtractor(fileName);
-                string rawDownloadedText = extractor.ExtractText().Replace("\n", " ").Replace("\t", " "); ;
-                string downloadedText = Regex.Replace(rawDownloadedText, $@"\s\s+", " ");
 
-                // Extract selected text from doc file
+                // Open a WordprocessingDocument for read-only access (using Open Xml Sdk)
+                string rawDownloadedText = string.Empty;
+                using (WordprocessingDocument wordDocument =
+                    WordprocessingDocument.Open(fileName, false))
+                {
+                    rawDownloadedText = wordDocument.MainDocumentPart.Document.Body.InnerText;
+                }
+                string downloadedText = Regex.Replace(rawDownloadedText, $@"\s\s+", " ");
+                // Extract selected text from docx file
                 var contractWhereInfo = Helpers.TextHelpers.GetContractWhere(downloadedText);
                 var contractEmployerInfo = Helpers.TextHelpers.GetContractEmployer(downloadedText);
                 var contractEmployeeInfo = Helpers.TextHelpers.GetContractEmployee(downloadedText);
@@ -121,10 +124,6 @@ namespace ContractDataGenerator_WindowsFormsApp
         private void bUploadDoc_Paint(object sender, PaintEventArgs e)
         {
             Helpers.StyleHelpers.Get3DButtonStyle(bUploadDoc, e);
-        }
-
-        public void bUploadPdf_Click(object sender, EventArgs e)
-        {
         }
     }
 }

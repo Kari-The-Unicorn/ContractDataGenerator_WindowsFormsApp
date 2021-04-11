@@ -66,7 +66,7 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bUploadDoc.Name = "bUploadDoc";
             this.bUploadDoc.Size = new System.Drawing.Size(264, 46);
             this.bUploadDoc.TabIndex = 4;
-            this.bUploadDoc.Text = "Wgraj plik .doc/.docx";
+            this.bUploadDoc.Text = "Wgraj plik .docx";
             this.bUploadDoc.UseVisualStyleBackColor = false;
             this.bUploadDoc.Click += new System.EventHandler(this.bUploadDoc_Click);
             this.bUploadDoc.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadDoc_Paint);

@@ -46,7 +46,7 @@ namespace Helpers
         {
             var contractContractorInfo = string.Empty;
             var contractContractorInfoMatch = Regex.Match(pageContent,
-                                        $@"(?<= A )(.*?)(?=zwan)");       
+                                        $@"(?<=Zamawiaj.*?A)(.*?)(?=zwan)");       
             if (contractContractorInfoMatch.Success)
             {
                 contractContractorInfo = contractContractorInfoMatch.Value.ToString()
