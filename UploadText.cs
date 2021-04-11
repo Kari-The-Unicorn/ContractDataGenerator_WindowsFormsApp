@@ -11,7 +11,6 @@ namespace ContractDataGenerator_WindowsFormsApp
 {
     public partial class UploadText : Form
     {
-
         private string newFilePath;
         private string safeFileName;
         public UploadText()
@@ -22,23 +21,36 @@ namespace ContractDataGenerator_WindowsFormsApp
         private void WriteToCsv(string contractWhereInfo, string contractEmployerInfo, string contractEmployeeInfo,
             string contractInvestorInfo, string contractValue)
         {
-            using (var writer = new StreamWriter(newFilePath))
-            using (var csvWriter = new CsvWriter(writer, CultureInfo.GetCultureInfo("en-GB")))
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.InitialDirectory = "C:\\";
+            saveFileDialog1.Title = "Save file to selected location";
+            saveFileDialog1.DefaultExt = "csv";
+            saveFileDialog1.AddExtension = true;
+            saveFileDialog1.Filter = "CSV file| *.csv";
+            saveFileDialog1.RestoreDirectory = true;
+            var today = DateTime.Now.ToString("ddMMyyyy_HHmmss");
+            saveFileDialog1.FileName = "tabelka_" + today;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var records = new List<Header>();
-                records.Add(new Header
+                string newFilePath = saveFileDialog1.FileName;
+                using (var writer = new StreamWriter(newFilePath))
+                using (var csvWriter = new CsvWriter(writer, CultureInfo.GetCultureInfo("en-GB")))
                 {
-                    DataMiejsce = contractWhereInfo,
-                    Zamawiajacy = contractEmployerInfo,
-                    Wykonawca = contractEmployeeInfo,
-                    Inwestor = contractInvestorInfo,
-                    WartoscUmowy = contractValue
-                });
-                csvWriter.WriteRecords(records);
+                    var records = new List<Header>();
+                    records.Add(new Header
+                    {
+                        DataMiejsce = contractWhereInfo,
+                        Zamawiajacy = contractEmployerInfo,
+                        Wykonawca = contractEmployeeInfo,
+                        Inwestor = contractInvestorInfo,
+                        WartoscUmowyPLN = contractValue
+                    });
+                    csvWriter.WriteRecords(records);
+                }
             }
         }
 
-        private void bUploadFile_Click(object sender, EventArgs e)
+        public void bUploadFile_Click(object sender, EventArgs e)
         {
             try
             {
@@ -51,13 +63,12 @@ namespace ContractDataGenerator_WindowsFormsApp
                     var contractEmployeeInfo = Helpers.TextHelpers.GetContractEmployee(textToLoad);
                     var contractInvestorInfo = Helpers.TextHelpers.GetContractInvestor(textToLoad);
                     var contractValue = Helpers.TextHelpers.GetContractValue(textToLoad);
-                    var today = DateTime.Now.ToString("ddMMyyyy_HHmmss");
-                    newFilePath = Directory.GetCurrentDirectory().ToString() +
-                        "\\UserFiles\\" + safeFileName + today + ".csv";
+                    //var today = DateTime.Now.ToString("ddMMyyyy_HHmmss");
+                    //newFilePath = Directory.GetCurrentDirectory().ToString() +
+                    //    "\\UserFiles\\" + safeFileName + today + ".csv";
                     // Create csv
                     WriteToCsv(contractWhereInfo, contractEmployerInfo, contractEmployeeInfo, contractInvestorInfo, contractValue);
-                    //bDownloadFile.Enabled = true;
-                    //bDownloadFile.Text = "Pobierz plik (aktywny)";
+                    this.Dispose();
                 }
             }
             catch

@@ -25,20 +25,34 @@ namespace ContractDataGenerator_WindowsFormsApp
         private void WriteToCsv(string contractWhereInfo, string contractEmployerInfo, string contractEmployeeInfo,
             string contractInvestorInfo, string contractValue)
         {
-            using (var writer = new StreamWriter(newFilePath))
-            using (var csvWriter = new CsvWriter(writer, CultureInfo.GetCultureInfo("en-GB")))
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Title = "Wybierz lokacje pliku tabelki (csv) do zapisania";
+            saveFileDialog1.DefaultExt = "csv";
+            saveFileDialog1.AddExtension = true;
+            saveFileDialog1.Filter = "CSV file| *.csv";
+            saveFileDialog1.RestoreDirectory = true;
+            var today = DateTime.Now.ToString("ddMMyyyy_HHmmss");
+            saveFileDialog1.FileName = "tabelka_" + today;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                var records = new List<Header>();
-                records.Add(new Header
+                string newFilePath =  saveFileDialog1.FileName;
+                using (var writer = new StreamWriter(newFilePath))
+                using (var csvWriter = new CsvWriter(writer, CultureInfo.GetCultureInfo("en-GB")))
                 {
-                    DataMiejsce = contractWhereInfo,
-                    Zamawiajacy = contractEmployerInfo,
-                    Wykonawca = contractEmployeeInfo,
-                    Inwestor = contractInvestorInfo,
-                    WartoscUmowy = contractValue
-                });
-                csvWriter.WriteRecords(records);
+                    var records = new List<Header>();
+                    records.Add(new Header
+                    {
+                        DataMiejsce = contractWhereInfo,
+                        Zamawiajacy = contractEmployerInfo,
+                        Wykonawca = contractEmployeeInfo,
+                        Inwestor = contractInvestorInfo,
+                        WartoscUmowyPLN = contractValue
+                    });
+                    csvWriter.WriteRecords(records);
+                }
             }
+
+            
         }
 
         private void bDownloadFile_Click(object sender, EventArgs e)
@@ -77,7 +91,6 @@ namespace ContractDataGenerator_WindowsFormsApp
                 MessageBox.Show("Kliknij OK żeby potwierdzić plik: " + openFile.SafeFileName + ".");
                 if (openFile.FileName != null)
                 {
-                    lUploadFileInfo.Text = "Wybrany plik: " + openFile.SafeFileName;
                     fileName = openFile.FileName;
                     safeFileName = openFile.SafeFileName;
                 }
@@ -101,19 +114,12 @@ namespace ContractDataGenerator_WindowsFormsApp
                 var contractEmployeeInfo = Helpers.TextHelpers.GetContractEmployee(downloadedText);
                 var contractInvestorInfo = Helpers.TextHelpers.GetContractInvestor(downloadedText);
                 var contractValue = Helpers.TextHelpers.GetContractValue(downloadedText);
-                var today = DateTime.Now.ToString("ddMMyyyy_HHmmss");
-                newFilePath = Directory.GetCurrentDirectory().ToString() +
-                    "\\UserFiles\\" + safeFileName.Replace(".doc", "").Replace(".docx", "") + "_" + today + ".csv";
+                //newFilePath = Directory.GetCurrentDirectory().ToString() +
+                //    "\\UserFiles\\" + safeFileName.Replace(".doc", "").Replace(".docx", "") + "_" + today + ".csv";
                 // Create csv
+               
                 WriteToCsv(contractWhereInfo, contractEmployerInfo, contractEmployeeInfo, contractInvestorInfo, contractValue);
-                bDownloadFile.Enabled = true;
-                bDownloadFile.Text = "Pobierz plik (aktywny)";
             }
-        }
-
-        private void bDownloadFile_Paint(object sender, PaintEventArgs e)
-        {
-            Helpers.StyleHelpers.Get3DButtonStyle(bDownloadFile, e);
         }
 
         private void bUploadText_Paint(object sender, PaintEventArgs e)

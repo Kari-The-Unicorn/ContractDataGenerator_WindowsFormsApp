@@ -37,6 +37,7 @@ namespace ContractDataGenerator_WindowsFormsApp
             // 
             // rtbUploadText
             // 
+            this.rtbUploadText.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.rtbUploadText.Location = new System.Drawing.Point(12, 12);
             this.rtbUploadText.Name = "rtbUploadText";
             this.rtbUploadText.Size = new System.Drawing.Size(808, 448);
@@ -53,6 +54,7 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.bUploadFile.Size = new System.Drawing.Size(175, 38);
             this.bUploadFile.TabIndex = 1;
             this.bUploadFile.Text = "Wgraj dane";
+            this.ttUploadDataClick.SetToolTip(this.bUploadFile, "Wklej tekst w pole powyżej (Ctrl +V), a następnie kliknij przycisk \"Wgraj dane\"");
             this.bUploadFile.UseVisualStyleBackColor = false;
             this.bUploadFile.Click += new System.EventHandler(this.bUploadFile_Click);
             this.bUploadFile.Paint += new System.Windows.Forms.PaintEventHandler(this.bUploadFile_Paint);
@@ -69,7 +71,7 @@ namespace ContractDataGenerator_WindowsFormsApp
             this.Controls.Add(this.bUploadFile);
             this.Controls.Add(this.rtbUploadText);
             this.Name = "UploadText";
-            this.Text = "UploadText";
+            this.Text = "Wgrywanie tekstu";
             this.ResumeLayout(false);
 
         }
